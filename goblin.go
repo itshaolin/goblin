@@ -272,6 +272,11 @@ func (g *G) Assert(src interface{}) *Assertion {
 	return &Assertion{src: src, fail: g.Fail}
 }
 
+func (g *G) AssertPanic(messages ...string) {
+    g.Assert(recover() != nil).IsTrue(messages...)
+}
+
+
 func timeTrack(start time.Time, g *G) {
 	g.reporter.itTook(time.Since(start))
 }
