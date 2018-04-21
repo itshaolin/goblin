@@ -100,6 +100,34 @@ Yes! Goblin will help you to test asynchronous things, like goroutines, etc. You
 
 Goblin will wait for the ```done``` call, a ```Fail``` call or any false assertion.
 
+Can I assert panic in tests?
+----------------------------
+
+Yes! Here is how you can do it
+
+```go
+package foobar
+
+import (
+    "testing"
+    . "github.com/franela/goblin"
+)
+
+func doPanic() {
+   panic("Example")
+}
+
+func Test(t *testing.T) {
+    g := Goblin(t)
+    g.Describe("doPanic", func() {
+        g.It("must panic", func() {
+            defer g.AssertPanic()
+            doPanic()
+        })
+    })
+}
+```
+
 How do I use it with Gomega?
 ----------------------------
 
